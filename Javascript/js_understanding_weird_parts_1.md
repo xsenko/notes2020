@@ -1,3 +1,5 @@
+**I summarized (sometimes extend) topics, examples in JavaScript: Understanding the Weird parts video series by Anthony Alicea**
+
 **Perfection is reached not when there is nothing more to add, but when there is nothing more to subtract -Antoine de Saint-Exupéry**
 
 When we run a javascript file, the runtime environment (this can be a browser like chrome with v8 engine or node.js runtime) creates 2 things, first the global object (if we are using browser this object is **window** and **this** which shows the global object)
