@@ -264,9 +264,173 @@ function greetToMeet(func=greet) {
 greetToMeet()
 ```
 
+## Objects and Dot
+We can create object in js two ways
+* first is
+```javascript
+var person = new Object()
+person.firstName = "Alice"
+person.lastName = "March"
+```
+* second way is **object literals**
+```javascript
+var person = {
+  firstName: 'Alice'
+  lastName: 'March'
+}
+```
+
+And there are two ways to reach object properties.
+* first one is dot notation or member access operator, `person.firstName` second is brackets or computed member access operator, difference is, if we use dot notation we can't give any variable, but if we use brackets we can use variables like
+```javascript
+var x = "firstName"
+person[x] // returns Alice
+
+person.x // returns undefined
+``` 
+
+* javascript objects accept all primitive types including other functions and objects, to use function in object (it is called object method, or method)  
+```javascript
+var person = {
+  firstName: "John",
+  lastName : "Doe",
+  id       : 5566,
+  fullName : function() {
+    return this.firstName + " " + this.lastName;
+  }
+};
+
+console.log(person.fullName()) // returns John Doe
+```
+
+* also **this** keyword references the owner of the method, which is person object. So difference between the this usage in functions is, this in normal function references the global scope (window object in browsers) but this in methods references the it's owner object.
+
+## Faking Namespaces
 
 
+## Json and Object Literals
+* in json properties wrapped with quotes 
+```
+{
+  "firstname": "Mary",
+  "isAProgrammer": true
+}
+```
+but in javascript object literals we don't need to wrap it with quotes
+```
+var person = {
+  firstname: "Mary",
+  isAProgrammer: true
+}
+```
 
+in javascript there is a build-in function callad JSON.stringfy(), directly convert js object to javastring, also JSON.parse() converts json file to js object.
+
+## Functions are objects
+
+First class functions: Everything you can do with other types (especially primitive types) you can do with functions. Assign them to variables, pass them around, create them on the fly.
+
+Functions are objects, but a special type of object.
+
+![functions](images/functions1.png)
+
+
+**difference betweeen function statement and function expression:** expression is a unit of code that results in a value. So function expression just creates / returns a value.
+
+```javascript
+var a
+a = 3 // this is a expression (don't forget = is a operator, that means it is actually a function, that takes two values a and 3, and returns value)
+// so if we go to console and write a = 3 it returns us 3
+1 + 2 // this is another example to expression returns 3
+ 
+```
+![functions2](images/functions2.png)
+
+also if we create a object, function, or anything with = operator it will return some value
+
+![functions3](images/functions3.png)
+
+```javascript
+if (a === 3) {
+  // ...
+} 
+// this is a statement, because if doesn't return something, it means you can use if like
+var b = if (...)
+```
+
+```javascript
+function greet() {
+  console.log("hi")
+}
+```
+above is a function statement, when js runtime execute this, this code block returns nothing.
+
+```javascript
+var anonGreet = function() {
+  console.log("hi")
+}
+```
+this is a expression, and result is function object. So anonGreet has a reference to the function object, and if we want to run the code in that function we just need to use `anonGreet()`  
+
+**important:** hoisting is not working for anonymous functions.
+```javascript
+anonymousgreet();
+
+var anonymousgreet = function() {
+  console.log("hi")
+}
+```
+this won't work, because javascript first scan statements like var, let and for var statement it will create anonymousgreet variable in heap and equal to the undefined. But when we are executing anonymousgreet is still undefined type so you can't execute with () an undefined type. Js engine will generate error.
+
+but in this example
+```javascript
+greet()
+
+function greet() {
+  console.log("hi") 
+}
+```
+here again js scan the statements and sees a function named greet, and create an function object in heap and while executing it sees greet() and looks the heap and js can find function named greet so it is possible hoisting functions with names.
+
+## By value and By Reference
+In JavaScript, a primitive (primitive value, primitive data type) is data that is not an object and has no methods. There are 7 primitive data types: string, number, bigint, boolean, null, undefined, and symbol.
+
+First thing about primitive types, they are immutable.
+```javascript
+var a = 5
+a = 6
+```
+here, js creates a space in heap and creates variable a, and variable a show the addres of the space where the value is 5.  
+When we make a = 6, js creates a new space in heap and puts value 6, and change the address value in a. (and sometime later, js will run gc and clean the space which includes 5 because it has no references)
+
+Primitive types works in by value principle
+```javascript
+var a = 6
+var b
+a = b
+a = 1
+console.log(a) // prints 1
+console.log(b) // prints 6
+```
+reason is when js executes `a=b` actually js creates a new space in heap and copies the value of a (the value a references) and copy it in new space, and b is gonna show that new space. 
+
+But if we are working with non-primitive types. For example objects or functions (don't forget functions are special kind of objects) then js works by reference principle
+```javascript
+var a = {
+  firstName: "alice"
+  lastName: "March"
+}
+
+var b
+b = a
+b.lastName = "Pink"
+
+console.log(a)
+console.log(b)
+```
+if we run above code, both will print the same thing, becuse when js execute `a=b` it will look inside a and understand this is not a primitive type and just create variable b and b points the same address with a.
+
+enter and explain examples of copy by value and copy by reference in functions
 
 
     
